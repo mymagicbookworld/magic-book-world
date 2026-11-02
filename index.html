@@ -152,45 +152,146 @@
 </footer>
 
 <script>
-  const pages = [
-    "Once upon a time, a rabbit lived in a forest. एक जंगल में एक खरगोश रहता था।",
-    "The rabbit met a tortoise. खरगोश की मुलाकात कछुए से हुई।",
-    "They decided to have a race. दोनों ने दौड़ लगाने का फैसला किया।",
-    "The tortoise won the race! कछुआ दौड़ जीत गया!"
-  ];
+  
+const pages = [
+  {
+    hi: "एक जंगल में एक खरगोश रहता था। उसे अपनी तेज दौड़ पर बहुत घमंड था।",
+    en: "Once upon a time, a rabbit lived in a forest. He was very proud of his speed.",
+    art: "🐰🌳🌲"
+  },
+  {
+    hi: "एक दिन खरगोश ने कछुए का मजाक उड़ाया। कछुए ने उसे दौड़ की चुनौती दी।",
+    en: "One day, the rabbit laughed at the tortoise. The tortoise challenged him to a race.",
+    art: "🐰 🐢 🏁"
+  },
+  {
+    hi: "खरगोश बहुत तेज दौड़ा और रास्ते में सो गया। कछुआ धीरे-धीरे आगे बढ़ता रहा।",
+    en: "The rabbit ran very fast and fell asleep. The tortoise kept moving slowly.",
+    art: "🐰💤 🐢🌿"
+  },
+  {
+    hi: "कछुआ दौड़ जीत गया। सीख: धीरे-धीरे और लगातार मेहनत करने से सफलता मिलती है।",
+    en: "The tortoise won the race! Moral: Slow and steady wins the race.",
+    art: "🐢🏆 🎉"
+  }
+];
 
-  let currentPage = 0;
+let currentPage = 0;
+let bookLang = "hi";
 
-  function openBook() {
-    currentPage = 0;
-    document.getElementById("reader").style.display = "block";
+function openBook() {
+  currentPage = 0;
+  const reader = document.getElementById("reader");
+  reader.style.display = "block";
+
+  const story = document.getElementById("story");
+  reader.style.perspective = "1000px";
+  story.style.background = "#fffdf5";
+  story.style.borderRadius = "15px";
+  story.style.padding = "25px";
+  story.style.minHeight = "180px";
+  story.style.transition = "transform 0.45s ease";
+  story.style.transformOrigin = "left center";
+  story.style.boxShadow = "5px 5px 15px #999";
+
+  if (!document.getElementById("voiceControls")) {
+    const controls = document.createElement("div");
+    controls.id = "voiceControls";
+    controls.style.textAlign = "center";
+    controls.style.margin = "15px";
+
+    controls.innerHTML = `
+      <button onclick="changeLanguage('hi')">हिंदी</button>
+      <button onclick="changeLanguage('en')">English</button>
+      <button onclick="speakStory()">🔊 Listen</button>
+      <button onclick="stopStory()">⏹ Stop</button>
+    `;
+
+    reader.insertBefore(controls, story);
+  }
+
+  showPage();
+  reader.scrollIntoView({behavior:"smooth"});
+}
+
+function changeLanguage(lang) {
+  bookLang = lang;
+  showPage();
+}
+
+function showPage() {
+  const p = pages[currentPage];
+  const story = document.getElementById("story");
+
+  story.innerHTML = `
+    <div style="font-size:65px;text-align:center;padding:15px;">
+      ${p.art}
+    </div>
+    <h3 style="text-align:center;color:#6846c5;">
+      ${bookLang === "hi" ? "खरगोश और कछुआ" : "Rabbit & Tortoise"}
+    </h3>
+    <p style="font-size:20px;text-align:center;line-height:1.7;">
+      ${bookLang === "hi" ? p.hi : p.en}
+    </p>
+  `;
+
+  document.getElementById("page").innerText =
+    "Page " + (currentPage + 1) + " / " + pages.length;
+}
+
+function flipPage(direction) {
+  const story = document.getElementById("story");
+
+  story.style.transform = "rotateY(-90deg)";
+
+  setTimeout(() => {
+    currentPage = Math.max(
+      0,
+      Math.min(pages.length - 1, currentPage + direction)
+    );
+
     showPage();
-    document.getElementById("reader").scrollIntoView();
-  }
+    story.style.transform = "rotateY(0deg)";
+  }, 250);
+}
 
-  function showPage() {
-    document.getElementById("story").innerText = pages[currentPage];
-    document.getElementById("page").innerText =
-      "Page " + (currentPage + 1) + " / " + pages.length;
+function nextPage() {
+  if (currentPage < pages.length - 1) {
+    stopStory();
+    flipPage(1);
   }
+}
 
-  function nextPage() {
-    if (currentPage < pages.length - 1) {
-      currentPage++;
-      showPage();
-    }
+function previousPage() {
+  if (currentPage > 0) {
+    stopStory();
+    flipPage(-1);
   }
+}
 
-  function previousPage() {
-    if (currentPage > 0) {
-      currentPage--;
-      showPage();
-    }
-  }
+function speakStory() {
+  stopStory();
 
-  function closeBook() {
-    document.getElementById("reader").style.display = "none";
+  const text = pages[currentPage][bookLang];
+  const speech = new SpeechSynthesisUtterance(text);
+
+  speech.lang = bookLang === "hi" ? "hi-IN" : "en-US";
+  speech.rate = 0.85;
+
+  window.speechSynthesis.speak(speech);
+}
+
+function stopStory() {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
   }
+}
+
+function closeBook() {
+  stopStory();
+  document.getElementById("reader").style.display = "none";
+}
+
 </script>
 
 </body>
