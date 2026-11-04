@@ -82,7 +82,41 @@
   <p>Read • Watch • Imagine</p>
   <p>Hindi & English Animated Books</p>
 </header>
+<section id="account" class="auth-section">
+  <h2>👤 Magic Book World Account</h2>
+  <p>Join our magical reading family!</p>
 
+  <div id="authForms">
+    <form id="registerForm">
+      <h3>📝 Create New Account</h3>
+      <input id="regName" type="text"
+        placeholder="Your Name" required>
+      <input id="regEmail" type="email"
+        placeholder="Email Address" required>
+      <input id="regPassword" type="password"
+        placeholder="Password (at least 6 characters)"
+        minlength="6" required>
+      <button type="submit">Register</button>
+    </form>
+
+    <form id="loginForm">
+      <h3>🔐 Login</h3>
+      <input id="loginEmail" type="email"
+        placeholder="Email Address" required>
+      <input id="loginPassword" type="password"
+        placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="loggedInPanel" hidden>
+    <h3>Welcome, <span id="userName"></span>! 🎉</h3>
+    <p id="userEmail"></p>
+    <button id="logoutButton" type="button">Logout</button>
+  </div>
+
+  <p id="authMessage" role="status"></p>
+</section>
 <section style="
   text-align:center;
   padding:30px 15px;
@@ -101,7 +135,41 @@
       border:4px solid #6846c5;
     "
   >
+.auth-section {
+  max-width: 480px;
+  margin: 30px auto;
+  padding: 22px;
+  background: #fff8e7;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
 
+.auth-section form {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border-radius: 12px;
+}
+
+.auth-section input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.auth-section button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #673ab7;
+  color: white;
+  cursor: pointer;
+}
   <h2 style="color:#5436a5;">
     SUMIT RAUT
   </h2>
@@ -434,6 +502,122 @@ function closeBook() {
 }
 
 </script>
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB1FLMVc_N9IOpzaDBh906-iN8mLvgbrDs",
+  authDomain: "magic-book-world.firebaseapp.com",
+  projectId: "magic-book-world",
+  storageBucket: "magic-book-world.firebasestorage.app",
+  messagingSenderId: "749901760375",
+  appId: "1:749901760375:web:b50dfe0a2f137c51fb0372",
+  measurementId: "G-ZGN2ZGCQS4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const message = document.getElementById("authMessage");
+
+function showMessage(text) {
+  message.textContent = text;
+}
+
+// REGISTER
+document.getElementById("registerForm")
+  .addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value;
+
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth, email, password
+      );
+
+      await updateProfile(result.user, {
+        displayName: name
+      });
+
+      showMessage("Account created successfully! 🎉");
+    } catch (error) {
+      showMessage(getErrorMessage(error.code));
+    }
+  });
+
+// LOGIN
+document.getElementById("loginForm")
+  .addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      showMessage("Login successful! Welcome back. 😊");
+    } catch (error) {
+      showMessage(getErrorMessage(error.code));
+    }
+  });
+
+// LOGIN STATUS
+onAuthStateChanged(auth, function(user) {
+  const forms = document.getElementById("authForms");
+  const panel = document.getElementById("loggedInPanel");
+
+  if (user) {
+    forms.hidden = true;
+    panel.hidden = false;
+
+    document.getElementById("userName").textContent =
+      user.displayName || "Reader";
+
+    document.getElementById("userEmail").textContent =
+      user.email || "";
+  } else {
+    forms.hidden = false;
+    panel.hidden = true;
+  }
+});
+
+// LOGOUT
+document.getElementById("logoutButton")
+  .addEventListener("click", async function() {
+    try {
+      await signOut(auth);
+      showMessage("You have logged out successfully.");
+    } catch (error) {
+      showMessage("Logout failed. Please try again.");
+    }
+  });
+
+// SIMPLE ERROR MESSAGES
+function getErrorMessage(code) {
+  const errors = {
+    "auth/email-already-in-use": "This email is already registered.",
+    "auth/invalid-email": "Please enter a valid email.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/invalid-credential": "Incorrect email or password.",
+    "auth/too-many-requests": "Too many attempts. Please try later.",
+    "auth/network-request-failed": "Check your internet connection."
+  };
+
+  return errors[code] || "Something went wrong. Please try again.";
+}
+</script>
 </body>
 </html>
