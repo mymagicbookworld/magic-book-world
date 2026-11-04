@@ -62,7 +62,16 @@
       border-radius: 16px;
       box-shadow: 0 4px 15px #ddd;
     }
-    #story { min-height: 100px; }
+    #story {
+  min-height: 180px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  border: 2px solid #e5d8b5;
+  overflow: hidden;
+  box-shadow: 8px 8px 18px rgba(0,0,0,0.25);
+}
     footer { padding: 20px; text-align: center; }
   </style>
 </head>
