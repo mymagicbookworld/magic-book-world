@@ -122,23 +122,46 @@
   <h2>Welcome to Magic Book World ✨</h2>
   <p>Discover magical stories and enjoy reading!</p>
 
-  <h2 id="books">Our Story Books</h2>
+ <h2 id="books">Our Story Books 📚</h2>
 
-  <div class="books">
-    <div class="book">
-      <div class="cover">🐢</div>
-      <h3>Rabbit & Tortoise</h3>
-      <p>खरगोश और कछुआ</p>
-      <button onclick="openBook()">Read Book</button>
-    </div>
+<div class="books">
 
-    <div class="book">
-      <div class="cover">🦁</div>
-      <h3>The Lion</h3>
-      <p>शेर की कहानी</p>
-      <button onclick="openBook()">Read Book</button>
-    </div>
+  <div class="book">
+    <div class="cover">🐰🐢</div>
+    <h3>Rabbit & Tortoise</h3>
+    <p>खरगोश और कछुआ</p>
+    <button onclick="openBook('rabbit')">Read Book</button>
   </div>
+
+  <div class="book">
+    <div class="cover">🦁🐭</div>
+    <h3>The Lion & Mouse</h3>
+    <p>शेर और चूहा</p>
+    <button onclick="openBook('lion')">Read Book</button>
+  </div>
+
+  <div class="book">
+    <div class="cover">🐦🏺</div>
+    <h3>The Thirsty Crow</h3>
+    <p>प्यासा कौआ</p>
+    <button onclick="openBook('crow')">Read Book</button>
+  </div>
+
+  <div class="book">
+    <div class="cover">🪓🌳</div>
+    <h3>The Honest Woodcutter</h3>
+    <p>ईमानदार लकड़हारा</p>
+    <button onclick="openBook('woodcutter')">Read Book</button>
+  </div>
+
+  <div class="book">
+    <div class="cover">🌱🌻</div>
+    <h3>The Little Seed</h3>
+    <p>नन्हा बीज</p>
+    <button onclick="openBook('seed')">Read Book</button>
+  </div>
+
+</div>
 
   <section id="reader">
     <h2>🐰 Rabbit & Tortoise</h2>
@@ -162,100 +185,167 @@
 
 <script>
   
-const pages = [
-  {
-    hi: "बहुत पुराने समय की बात है। सुंदरवन नाम के जंगल में वीर नाम का एक शेर रहता था। उसकी दहाड़ से पहाड़ भी गूँज उठते थे। उसे अपनी ताकत पर बहुत घमंड था। वह मानता था कि ताकत ही सबसे बड़ी पहचान है।",
-    en: "Long ago, in a beautiful forest, lived a lion named Veer. His roar echoed across the hills. He was proud of his strength and believed that power was everything.",
-    col: 0, row: 0
+
+const stories = {
+  rabbit: {
+    title: "खरगोश और कछुआ",
+    englishTitle: "Rabbit & Tortoise",
+    pages: [
+      {
+        art:"🐰🌳🐢",
+        hi:"एक सुंदर जंगल में तेज दौड़ने वाला खरगोश रहता था। उसे अपनी गति पर बहुत घमंड था। वह दूसरे जानवरों का मजाक उड़ाता था। उसी जंगल में एक शांत और मेहनती कछुआ भी रहता था।",
+        en:"In a beautiful forest lived a fast rabbit. He was very proud of his speed and often laughed at other animals. A calm and hardworking tortoise also lived there."
+      },
+      {
+        art:"🏁🐰🐢",
+        hi:"एक दिन खरगोश ने कछुए को दौड़ की चुनौती दी। सभी जानवर इकट्ठा हुए। दौड़ शुरू हुई और खरगोश बहुत तेजी से आगे निकल गया। कछुआ धीरे-धीरे लेकिन लगातार चलता रहा।",
+        en:"One day the rabbit challenged the tortoise to a race. All the animals gathered. The race began. The rabbit ran far ahead while the tortoise kept moving slowly and steadily."
+      },
+      {
+        art:"🐰💤🌳",
+        hi:"खरगोश ने पीछे मुड़कर देखा। कछुआ बहुत दूर था। उसने सोचा कि थोड़ा आराम कर लेता हूँ। वह पेड़ के नीचे सो गया। लेकिन कछुआ रुका नहीं। वह हर कदम के साथ मंजिल के करीब पहुँचता गया।",
+        en:"The rabbit looked back and saw the tortoise far behind. He decided to rest under a tree and fell asleep. But the tortoise did not stop. Every step brought him closer to the finish line."
+      },
+      {
+        art:"🐢🏆🎉",
+        hi:"जब खरगोश की नींद खुली, कछुआ मंजिल पार कर चुका था। खरगोश हार गया। उसे अपनी गलती समझ आई। उसने सीखा कि घमंड से नहीं, लगातार मेहनत और धैर्य से सफलता मिलती है।",
+        en:"When the rabbit woke up, the tortoise had already crossed the finish line. The rabbit lost and understood his mistake. He learned that success comes through patience and consistent effort, not pride."
+      }
+    ]
   },
-  {
-    hi: "उसी जंगल में चिंटू नाम का एक छोटा चूहा रहता था। वह आकार में छोटा था, लेकिन उसके सपने बहुत बड़े थे। वह हर दिन कुछ नया सीखता और जरूरतमंदों की मदद करता था।",
-    en: "In the same forest lived a little mouse named Chintu. He was tiny, but his dreams were big. Every day he learned something new and helped those in need.",
-    col: 1, row: 0
+
+  lion: {
+    title: "शेर और चूहा",
+    englishTitle: "The Lion & The Mouse",
+    pages: [
+      {
+        art:"🦁🌳🌞",
+        hi:"एक घने जंगल में वीर नाम का शक्तिशाली शेर रहता था। उसे अपनी ताकत पर बहुत घमंड था। वह सोचता था कि कोई भी उसकी मदद नहीं कर सकता। एक दिन वह पेड़ के नीचे गहरी नींद में सो रहा था।",
+        en:"In a deep forest lived a powerful lion named Veer. He was very proud of his strength and believed nobody could ever help him. One day he was sleeping under a tree."
+      },
+      {
+        art:"🐭🦁",
+        hi:"चिंटू नाम का छोटा चूहा खेलते हुए शेर के ऊपर चढ़ गया। शेर जागा और उसे पकड़ लिया। चूहे ने विनती की, मुझे छोड़ दीजिए। शायद एक दिन मैं भी आपकी मदद कर सकूँ। शेर हँसा, लेकिन उसने चूहे को छोड़ दिया।",
+        en:"A little mouse named Chintu climbed over the sleeping lion while playing. The lion caught him. The mouse begged, Please let me go. Perhaps one day I can help you. The lion laughed but released him."
+      },
+      {
+        art:"🦁🕸️😟",
+        hi:"कुछ दिनों बाद शिकारी जंगल में आए। उन्होंने जाल बिछाया और शेर उसमें फँस गया। शेर ने बहुत कोशिश की, लेकिन जाल नहीं टूटा। उसकी दहाड़ सुनकर चिंटू दौड़ता हुआ वहाँ आया।",
+        en:"A few days later, hunters came into the forest and set a trap. The lion got caught in the net. He struggled hard, but could not escape. Hearing his roar, Chintu rushed to help."
+      },
+      {
+        art:"🐭🦁❤️",
+        hi:"चिंटू ने अपने नन्हे दाँतों से जाल काटना शुरू किया। थोड़ी देर बाद शेर आजाद हो गया। शेर ने कहा, आज तुमने मुझे सिखाया कि छोटा होना कमजोरी नहीं है। दया और दोस्ती सबसे बड़ी ताकत हैं।",
+        en:"Chintu began cutting the net with his tiny teeth. Soon the lion was free. The lion said, You have taught me that being small is not weakness. Kindness and friendship are great strengths."
+      }
+    ]
   },
-  {
-    hi: "एक दिन चिंटू खेलते-खेलते शेर की गुफा में पहुँच गया। शेर की नींद खुल गई। उसने गुस्से में चिंटू को अपने पंजे में पकड़ लिया। चिंटू डर गया, लेकिन उसने हिम्मत नहीं छोड़ी।",
-    en: "One day, while playing, Chintu entered the lion's cave. The lion woke up and caught him in his paw. Chintu was frightened, but he did not lose courage.",
-    col: 2, row: 0
+
+  crow: {
+    title: "प्यासा कौआ",
+    englishTitle: "The Thirsty Crow",
+    pages: [
+      {
+        art:"🐦☀️🌳",
+        hi:"गर्मियों का समय था। सूरज बहुत तेज चमक रहा था। एक कौआ कई घंटों से पानी खोज रहा था। उसकी प्यास बढ़ती जा रही थी और वह थककर एक पेड़ पर बैठ गया।",
+        en:"It was a hot summer day. The sun was shining brightly. A crow had been searching for water for hours. His thirst grew stronger and he sat down on a tree, tired."
+      },
+      {
+        art:"🐦🏺💧",
+        hi:"अचानक उसे एक बगीचे में मिट्टी का घड़ा दिखाई दिया। वह खुशी से नीचे उतरा। घड़े में थोड़ा पानी था, लेकिन उसकी चोंच पानी तक नहीं पहुँच पा रही थी। कौआ निराश हुआ, पर उसने हार नहीं मानी।",
+        en:"Suddenly he spotted a clay pot in a garden. He flew down happily. There was a little water inside, but his beak could not reach it. The crow felt disappointed, but he did not give up."
+      },
+      {
+        art:"🐦🪨🪨",
+        hi:"कौए ने आसपास देखा। उसे छोटे-छोटे कंकड़ दिखाई दिए। उसके मन में एक उपाय आया। उसने एक-एक करके कंकड़ घड़े में डालना शुरू किया। पानी धीरे-धीरे ऊपर आने लगा।",
+        en:"The crow looked around and saw small stones. An idea came to his mind. He began dropping the stones into the pot one by one. Slowly, the water level started rising."
+      },
+      {
+        art:"🐦💧😊",
+        hi:"कुछ ही देर में पानी ऊपर आ गया। कौए ने आराम से पानी पिया और उड़ गया। उसने समझा कि कठिनाई आने पर घबराना नहीं चाहिए। शांत दिमाग और समझदारी से रास्ता मिल सकता है।",
+        en:"Soon the water rose high enough. The crow drank happily and flew away. He learned that we should not panic when problems appear. A calm mind and clever thinking can find a way."
+      }
+    ]
   },
-  {
-    hi: "चिंटू ने हाथ जोड़कर कहा, महाराज, मुझे छोड़ दीजिए। शायद एक दिन मैं भी आपकी मदद कर सकूँ। शेर जोर से हँसा। उसे विश्वास नहीं हुआ कि इतना छोटा चूहा उसकी मदद कर सकता है।",
-    en: "Chintu folded his paws and said, Please let me go, Your Majesty. Perhaps one day I can help you. The lion laughed. He could not imagine such a tiny mouse helping him.",
-    col: 3, row: 0
+
+  woodcutter: {
+    title: "ईमानदार लकड़हारा",
+    englishTitle: "The Honest Woodcutter",
+    pages: [
+      {
+        art:"🪓🌳🏡",
+        hi:"एक गाँव में रामू नाम का गरीब लकड़हारा रहता था। वह रोज जंगल जाता और लकड़ियाँ काटकर अपना परिवार चलाता था। उसके पास ज्यादा धन नहीं था, लेकिन वह बहुत ईमानदार और मेहनती था।",
+        en:"In a village lived a poor woodcutter named Ramu. Every day he went to the forest and sold wood to support his family. He did not have much money, but he was honest and hardworking."
+      },
+      {
+        art:"🌳🪓💦",
+        hi:"एक दिन नदी के किनारे पेड़ काटते समय उसकी लोहे की कुल्हाड़ी नदी में गिर गई। नदी बहुत गहरी थी। रामू परेशान होकर बैठ गया। वह सोचने लगा कि अब परिवार का पालन कैसे करेगा।",
+        en:"One day, while cutting a tree near a river, his iron axe slipped into the water. The river was deep. Ramu sat sadly, wondering how he would support his family."
+      },
+      {
+        art:"🧚✨🥇",
+        hi:"तभी नदी से एक दिव्य परी प्रकट हुई। उसने सोने की कुल्हाड़ी दिखाई और पूछा, क्या यह तुम्हारी है? रामू ने कहा, नहीं। फिर उसने चाँदी की कुल्हाड़ी दिखाई। रामू ने उसे भी अपना नहीं बताया।",
+        en:"Suddenly, a magical fairy appeared from the river. She showed him a golden axe and asked if it was his. Ramu said no. Then she showed him a silver axe. He honestly said that was not his either."
+      },
+      {
+        art:"🪓🥇🥈😊",
+        hi:"आखिर परी ने उसकी लोहे की कुल्हाड़ी निकाली। रामू खुशी से बोला, यही मेरी कुल्हाड़ी है! उसकी ईमानदारी से प्रसन्न होकर परी ने तीनों कुल्हाड़ियाँ उसे दे दीं। रामू ने सीखा कि सच्चाई का फल हमेशा अच्छा होता है।",
+        en:"Finally, the fairy brought out his iron axe. Ramu happily said, That is mine! Pleased with his honesty, the fairy gave him all three axes. Ramu learned that honesty brings lasting rewards."
+      }
+    ]
   },
-  {
-    hi: "शेर ने दया करके चिंटू को छोड़ दिया। चिंटू ने जाते-जाते कहा, आपकी इस दया को मैं कभी नहीं भूलूँगा। शेर मुस्कराया और फिर सो गया। लेकिन जंगल में एक बड़ा खतरा छिपा हुआ था।",
-    en: "The lion felt kind and released Chintu. Chintu promised never to forget this kindness. The lion smiled and went back to sleep. But a great danger was hiding in the forest.",
-    col: 0, row: 1
-  },
-  {
-    hi: "कुछ दिनों बाद जंगल में शिकारी आए। उन्होंने शेर के रास्ते में एक मजबूत जाल बिछा दिया। शेर भोजन की तलाश में निकला और अचानक जाल में फँस गया। उसने पूरी ताकत लगाई, पर जाल नहीं टूटा।",
-    en: "A few days later, hunters entered the forest and placed a strong net along the lion's path. While searching for food, Veer got trapped. He struggled with all his strength, but the net would not break.",
-    col: 1, row: 1
-  },
-  {
-    hi: "शेर ने जोर-जोर से दहाड़ना शुरू किया। उसकी आवाज़ पूरे जंगल में फैल गई। कई जानवर डरकर छिप गए। चिंटू ने आवाज़ सुनी और पहचान लिया कि यह उसके मित्र वीर की पुकार है।",
-    en: "The lion roared loudly. His cries echoed throughout the forest. Many animals hid in fear. Chintu heard the sound and recognized that his friend Veer was calling for help.",
-    col: 2, row: 1
-  },
-  {
-    hi: "चिंटू तेजी से वहाँ पहुँचा। शेर ने कहा, चिंटू, तुम यहाँ मत आना! यह जाल बहुत मजबूत है। लेकिन चिंटू बोला, मित्र मुसीबत में हो तो पीछे नहीं हटना चाहिए। उसने अपने छोटे-छोटे दाँतों से जाल काटना शुरू किया।",
-    en: "Chintu rushed to the spot. The lion warned him to stay away because the net was strong. But Chintu said, A true friend never runs away from trouble. He began biting the ropes with his tiny teeth.",
-    col: 3, row: 1
-  },
-  {
-    hi: "जाल बहुत मोटा था। चिंटू के दाँत दर्द करने लगे। फिर भी उसने हार नहीं मानी। वह एक रस्सी काटता, फिर दूसरी। उसे याद था कि शेर ने उस दिन उस पर दया की थी। आज उसकी बारी थी।",
-    en: "The ropes were thick and Chintu's teeth began to hurt. Still, he refused to give up. He cut one rope after another. He remembered the kindness the lion had shown him. Now it was his turn to help.",
-    col: 0, row: 2
-  },
-  {
-    hi: "आखिरकार आखिरी रस्सी भी कट गई और शेर आज़ाद हो गया। शेर की आँखों में खुशी के आँसू थे। उसने कहा, चिंटू, आज तुमने मुझे सिखाया कि असली ताकत शरीर के आकार में नहीं, बल्कि हिम्मत और अच्छे दिल में होती है।",
-    en: "At last, the final rope snapped and the lion was free. Tears of joy filled his eyes. He said, Chintu, you have taught me that true strength is not about size. It is about courage and a kind heart.",
-    col: 1, row: 2
-  },
-  {
-    hi: "उस दिन से शेर और चूहा सबसे अच्छे मित्र बन गए। शेर ने अपना घमंड छोड़ दिया और सभी जानवरों का सम्मान करना शुरू किया। चिंटू ने भी समझा कि मदद करने के लिए बड़ा होना जरूरी नहीं है।",
-    en: "From that day, the lion and the mouse became the best of friends. The lion gave up his pride and respected every animal. Chintu learned that you do not have to be big to make a big difference.",
-    col: 2, row: 2
-  },
-  {
-    hi: "सीख: किसी को छोटा या कमजोर समझकर उसका अपमान मत करो। दया कभी व्यर्थ नहीं जाती। हिम्मत, मेहनत और आत्मविश्वास से बड़ी से बड़ी मुश्किल को हराया जा सकता है। आज किसी की मदद करो—कल वही मदद तुम्हारी ताकत बन सकती है!",
-    en: "Moral: Never look down on anyone. Kindness is never wasted. Courage, hard work and confidence can overcome great difficulties. Help someone today, and that kindness may become your strength tomorrow!",
-    col: 3, row: 2
+
+  seed: {
+    title: "नन्हा बीज",
+    englishTitle: "The Little Seed",
+    pages: [
+      {
+        art:"🌱🌧️🌍",
+        hi:"एक बगीचे की मिट्टी में एक छोटा सा बीज पड़ा था। वह दूसरे बड़े पेड़ों को देखकर सोचता था कि मैं इतना छोटा हूँ, कभी बड़ा नहीं बन पाऊँगा। उसे अपनी क्षमता पर विश्वास नहीं था।",
+        en:"A tiny seed lay in the soil of a garden. Looking at the tall trees, it thought, I am so small. I will never become something big. It did not believe in itself."
+      },
+      {
+        art:"🌧️🌞🌱",
+        hi:"एक दिन बारिश हुई और मिट्टी नरम हो गई। बीज के भीतर एक नई उम्मीद जागी। उसने सोचा, मैं कोशिश तो कर सकता हूँ। उसने अपनी छोटी सी जड़ बाहर निकाली और मिट्टी को धीरे-धीरे चीरना शुरू किया।",
+        en:"One day rain softened the soil. A new hope awakened inside the seed. It thought, At least I can try. It pushed out a tiny root and slowly began breaking through the soil."
+      },
+      {
+        art:"🌱🌿💪",
+        hi:"रास्ते में पत्थर आए, तेज धूप आई और कभी-कभी पानी भी नहीं मिला। फिर भी नन्हा पौधा बढ़ता रहा। वह हर दिन थोड़ा मजबूत बनता गया। उसने समझा कि मुश्किलें रास्ता रोकने नहीं, मजबूत बनाने आती हैं।",
+        en:"There were stones, strong sunlight and days without rain. Still, the little plant kept growing. Every day it became a little stronger. It learned that difficulties can make us stronger."
+      },
+      {
+        art:"🌳🌻🦋",
+        hi:"कई महीनों बाद वही छोटा बीज एक सुंदर पेड़ बन गया। उसकी छाया में पक्षी रहने लगे और बच्चे खेलने लगे। अब उसे अपनी छोटी शुरुआत पर गर्व था। सीख: अपने छोटे कदमों को कम मत समझो। लगातार कोशिश से बड़े सपने पूरे होते हैं।",
+        en:"Months later, the tiny seed had become a beautiful tree. Birds lived in its branches and children played in its shade. It was proud of its small beginning. Moral: Never underestimate small steps. Consistent effort can grow into great achievements."
+      }
+    ]
   }
-];
+};
+
+let currentStory = "rabbit";
 let currentPage = 0;
 let bookLang = "hi";
 
-function openBook() {
+function openBook(id) {
+  if (!stories[id]) return;
+  currentStory = id;
   currentPage = 0;
   const reader = document.getElementById("reader");
   reader.style.display = "block";
-
-  const story = document.getElementById("story");
-  reader.style.perspective = "1000px";
-  story.style.background = "#fffdf5";
-  story.style.borderRadius = "15px";
-  story.style.padding = "25px";
-  story.style.minHeight = "180px";
-  story.style.transition = "transform 0.45s ease";
-  story.style.transformOrigin = "left center";
-  story.style.boxShadow = "5px 5px 15px #999";
 
   if (!document.getElementById("voiceControls")) {
     const controls = document.createElement("div");
     controls.id = "voiceControls";
     controls.style.textAlign = "center";
     controls.style.margin = "15px";
-
     controls.innerHTML = `
       <button onclick="changeLanguage('hi')">हिंदी</button>
       <button onclick="changeLanguage('en')">English</button>
       <button onclick="speakStory()">🔊 Listen</button>
       <button onclick="stopStory()">⏹ Stop</button>
     `;
-
-    reader.insertBefore(controls, story);
+    reader.insertBefore(controls, document.getElementById("story"));
   }
 
   showPage();
@@ -268,73 +358,49 @@ function changeLanguage(lang) {
 }
 
 function showPage() {
-  const p = pages[currentPage];
+  const book = stories[currentStory];
+  const p = book.pages[currentPage];
   const story = document.getElementById("story");
 
-  const x = (p.col / 3) * 100;
-  const y = (p.row / 2) * 100;
-
   story.innerHTML = `
-    <div style="
-      width:100%;
-      aspect-ratio:1.2 / 1;
-      background-image:url('lion_mouse_story_sprite.jpg');
-      background-size:400% 300%;
-      background-position:${x}% ${y}%;
-      background-repeat:no-repeat;
-      border-radius:10px;
-      margin-bottom:15px;
-    "></div>
-
+    <div style="font-size:75px;text-align:center;padding:20px;">
+      ${p.art}
+    </div>
     <h3 style="text-align:center;color:#6846c5;">
-      ${bookLang === "hi"
-        ? "शेर और चूहा – असली ताकत की पहचान"
-        : "The Lion and the Little Mouse"}
+      ${bookLang === "hi" ? book.title : book.englishTitle}
     </h3>
-
-    <p style="font-size:18px;line-height:1.7;text-align:center;">
+    <p style="font-size:20px;text-align:center;line-height:1.8;">
       ${p[bookLang]}
     </p>
   `;
 
   document.getElementById("page").innerText =
-    "Page " + (currentPage + 1) + " / " + pages.length;
+    "Page " + (currentPage + 1) + " / " + book.pages.length;
 }
 
 function flipPage(direction) {
   const story = document.getElementById("story");
-
-  story.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-  story.style.transformOrigin = direction > 0 ? "left center" : "right center";
+  story.style.transition = "transform 0.3s ease";
   story.style.transform = direction > 0
-    ? "rotateY(-85deg)"
-    : "rotateY(85deg)";
-  story.style.opacity = "0.65";
+    ? "rotateY(-80deg)"
+    : "rotateY(80deg)";
 
   setTimeout(() => {
     currentPage = Math.max(
       0,
-      Math.min(pages.length - 1, currentPage + direction)
+      Math.min(stories[currentStory].pages.length - 1,
+      currentPage + direction)
     );
-
     showPage();
-
     story.style.transition = "none";
-    story.style.transform = direction > 0
-      ? "rotateY(85deg)"
-      : "rotateY(-85deg)";
-    story.style.opacity = "0.65";
-
-    void story.offsetWidth;
-
-    story.style.transition = "transform 0.3s ease, opacity 0.3s ease";
     story.style.transform = "rotateY(0deg)";
-    story.style.opacity = "1";
+    void story.offsetWidth;
+    story.style.transition = "transform 0.3s ease";
   }, 300);
 }
 
 function nextPage() {
-  if (currentPage < pages.length - 1) {
+  if (currentPage < stories[currentStory].pages.length - 1) {
     stopStory();
     flipPage(1);
   }
@@ -349,13 +415,10 @@ function previousPage() {
 
 function speakStory() {
   stopStory();
-
-  const text = pages[currentPage][bookLang];
-  const speech = new SpeechSynthesisUtterance(text);
-
+  const p = stories[currentStory].pages[currentPage];
+  const speech = new SpeechSynthesisUtterance(p[bookLang]);
   speech.lang = bookLang === "hi" ? "hi-IN" : "en-US";
   speech.rate = 0.85;
-
   window.speechSynthesis.speak(speech);
 }
 
