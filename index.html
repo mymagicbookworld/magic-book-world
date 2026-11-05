@@ -1,68 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Magic Book World</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f0ff;
-      color: #292044;
-    }
-    header {
-      background: #5436a5;
-      color: white;
-      padding: 25px 15px;
-      text-align: center;
-    }
-    header h1 { margin: 0 0 8px; }
-    nav {
-      padding: 14px;
-      text-align: center;
-      background: white;
-    }
-    nav a {
-      margin: 8px;
-      color: #5436a5;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    main { padding: 20px; text-align: center; }
-    .books {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
-      gap: 16px;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-    .book {
-      background: white;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 4px 12px #ddd;
-    }
-    .cover { font-size: 55px; }
-    button {
-      background: #6846c5;
-      color: white;
-      border: 0;
-      border-radius: 20px;
-      padding: 10px 18px;
-      cursor: pointer;
-    }
-    #reader {
-      display: none;
-      background: white;
-      max-width: 500px;
-      margin: 25px auto;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px #ddd;
-    }
-    #story {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magic Book World</title>
+
+<style>
+[hidden] {
+  display: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f0ff;
+  color: #292044;
+}
+
+#mbw-login {
+  max-width: 430px;
+  margin: 35px auto;
+  padding: 25px;
+  border-radius: 16px;
+  background: #102b64;
+  color: white;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 8px 25px #0003;
+}
+
+#mbw-login h2 {
+  text-align: center;
+}
+
+#mbw-login input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #ccd5e5;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+#mbw-login button {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0;
+  border: 0;
+  border-radius: 8px;
+  background: #ffd34e;
+  color: #17264b;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#mbw-login button.secondary {
+  background: white;
+}
+
+#mbw-message {
+  min-height: 24px;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+#mbw-userbar {
+  padding: 12px;
+  text-align: center;
+  background: #e8f0ff;
+  color: #17264b;
+}
+
+header {
+  background: #5436a5;
+  color: white;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 8px;
+}
+
+nav {
+  padding: 14px;
+  text-align: center;
+  background: white;
+}
+
+nav a {
+  margin: 8px;
+  color: #5436a5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  padding: 20px;
+  text-align: center;
+}
+
+.books {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap: 16px;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+.book {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 12px #ddd;
+}
+
+.cover {
+  font-size: 55px;
+}
+
+button {
+  background: #6846c5;
+  color: white;
+  border: 0;
+  border-radius: 20px;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+
+#reader {
+  background: white;
+  max-width: 500px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px #ddd;
+}
+
+#story {
   min-height: 180px;
   position: relative;
   transform-style: preserve-3d;
@@ -72,51 +151,81 @@
   overflow: hidden;
   box-shadow: 8px 8px 18px rgba(0,0,0,0.25);
 }
-    footer { padding: 20px; text-align: center; }
-  </style>
+
+footer {
+  padding: 20px;
+  text-align: center;
+}
+</style>
 </head>
+
 <body>
+
+<section id="mbw-login">
+  <h2>📖 Magic Book World</h2>
+
+  <p style="text-align:center">
+    Login या Register करके अपनी किताबें पढ़ें।
+  </p>
+
+  <h3>Email Login / Register</h3>
+
+  <input id="mbw-email" type="email"
+    placeholder="Email address" autocomplete="email">
+
+  <input id="mbw-password" type="password"
+    placeholder="Password (कम से कम 6 अक्षर)"
+    autocomplete="current-password">
+
+  <button id="mbw-register">Create New Account</button>
+
+  <button id="mbw-email-login" class="secondary">
+    Login with Email
+  </button>
+
+  <button id="mbw-reset" class="secondary">
+    Forgot Password?
+  </button>
+
+  <hr>
+
+  <h3>Mobile OTP Login</h3>
+
+  <input id="mbw-phone" type="tel"
+    placeholder="+91 9876543210" autocomplete="tel">
+
+  <div id="mbw-recaptcha"></div>
+
+  <button id="mbw-send-otp">Send OTP</button>
+
+  <div id="mbw-otp-area" hidden>
+    <input id="mbw-otp" type="text"
+      inputmode="numeric" placeholder="Enter 6-digit OTP">
+
+    <button id="mbw-verify-otp">
+      Verify OTP & Login
+    </button>
+  </div>
+
+  <p id="mbw-message" role="status"></p>
+</section>
+
+<div id="site-content" hidden>
+
+<div id="mbw-userbar" hidden>
+  <span id="mbw-user-info"></span>
+  <button id="mbw-logout"
+    style="width:auto;padding:8px 18px">
+    Logout
+  </button>
+</div>
 
 <header>
   <h1>📚 Magic Book World</h1>
   <p>Read • Watch • Imagine</p>
   <p>Hindi & English Animated Books</p>
 </header>
-<section id="account" class="auth-section">
-  <h2>👤 Magic Book World Account</h2>
-  <p>Join our magical reading family!</p>
 
-  <div id="authForms">
-    <form id="registerForm">
-      <h3>📝 Create New Account</h3>
-      <input id="regName" type="text"
-        placeholder="Your Name" required>
-      <input id="regEmail" type="email"
-        placeholder="Email Address" required>
-      <input id="regPassword" type="password"
-        placeholder="Password (at least 6 characters)"
-        minlength="6" required>
-      <button type="submit">Register</button>
-    </form>
-
-    <form id="loginForm">
-      <h3>🔐 Login</h3>
-      <input id="loginEmail" type="email"
-        placeholder="Email Address" required>
-      <input id="loginPassword" type="password"
-        placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-
-  <div id="loggedInPanel" hidden>
-    <h3>Welcome, <span id="userName"></span>! 🎉</h3>
-    <p id="userEmail"></p>
-    <button id="logoutButton" type="button">Logout</button>
-  </div>
-
-  <p id="authMessage" role="status"></p>
-</section>
 <section style="
   text-align:center;
   padding:30px 15px;
@@ -124,52 +233,17 @@
   border-radius:20px;
   margin:20px;
 ">
-  <img
-    src="IMG_20261102_103421.jpg"
-    alt="Sumit Raut"
+
+  <img src="IMG_20261102_103421.jpg"
+    alt="Founder"
     style="
       width:140px;
       height:160px;
       object-fit:cover;
       border-radius:20px;
       border:4px solid #6846c5;
-    "
-  >
-.auth-section {
-  max-width: 480px;
-  margin: 30px auto;
-  padding: 22px;
-  background: #fff8e7;
-  border-radius: 18px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
+    ">
 
-.auth-section form {
-  margin: 20px 0;
-  padding: 15px;
-  background: white;
-  border-radius: 12px;
-}
-
-.auth-section input {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.auth-section button {
-  padding: 11px 22px;
-  border: none;
-  border-radius: 8px;
-  background: #673ab7;
-  color: white;
-  cursor: pointer;
-}
   <h2 style="color:#5436a5;">
     SUMIT RAUT
   </h2>
@@ -190,52 +264,52 @@
   <h2>Welcome to Magic Book World ✨</h2>
   <p>Discover magical stories and enjoy reading!</p>
 
- <h2 id="books">Our Story Books 📚</h2>
+  <h2 id="books">Our Story Books 📚</h2>
 
-<div class="books">
+  <div class="books">
 
-  <div class="book">
-    <div class="cover">🐰🐢</div>
-    <h3>Rabbit & Tortoise</h3>
-    <p>खरगोश और कछुआ</p>
-    <button onclick="openBook('rabbit')">Read Book</button>
+    <div class="book">
+      <div class="cover">🐰🐢</div>
+      <h3>Rabbit & Tortoise</h3>
+      <p>खरगोश और कछुआ</p>
+      <button onclick="openBook('rabbit')">Read Book</button>
+    </div>
+
+    <div class="book">
+      <div class="cover">🦁🐭</div>
+      <h3>The Lion & Mouse</h3>
+      <p>शेर और चूहा</p>
+      <button onclick="openBook('lion')">Read Book</button>
+    </div>
+
+    <div class="book">
+      <div class="cover">🐦🏺</div>
+      <h3>The Thirsty Crow</h3>
+      <p>प्यासा कौआ</p>
+      <button onclick="openBook('crow')">Read Book</button>
+    </div>
+
+    <div class="book">
+      <div class="cover">🪓🌳</div>
+      <h3>The Honest Woodcutter</h3>
+      <p>ईमानदार लकड़हारा</p>
+      <button onclick="openBook('woodcutter')">Read Book</button>
+    </div>
+
+    <div class="book">
+      <div class="cover">🌱🌻</div>
+      <h3>The Little Seed</h3>
+      <p>नन्हा बीज</p>
+      <button onclick="openBook('seed')">Read Book</button>
+    </div>
+
   </div>
 
-  <div class="book">
-    <div class="cover">🦁🐭</div>
-    <h3>The Lion & Mouse</h3>
-    <p>शेर और चूहा</p>
-    <button onclick="openBook('lion')">Read Book</button>
-  </div>
-
-  <div class="book">
-    <div class="cover">🐦🏺</div>
-    <h3>The Thirsty Crow</h3>
-    <p>प्यासा कौआ</p>
-    <button onclick="openBook('crow')">Read Book</button>
-  </div>
-
-  <div class="book">
-    <div class="cover">🪓🌳</div>
-    <h3>The Honest Woodcutter</h3>
-    <p>ईमानदार लकड़हारा</p>
-    <button onclick="openBook('woodcutter')">Read Book</button>
-  </div>
-
-  <div class="book">
-    <div class="cover">🌱🌻</div>
-    <h3>The Little Seed</h3>
-    <p>नन्हा बीज</p>
-    <button onclick="openBook('seed')">Read Book</button>
-  </div>
-
-</div>
-
-  <section id="reader">
-    <h2>🐰 Rabbit & Tortoise</h2>
-    <div id="story">Once upon a time, a rabbit lived in a forest.
-    एक जंगल में एक खरगोश रहता था।</div>
+  <section id="reader" hidden>
+    <h2>📖 Magic Book Reader</h2>
+    <div id="story"></div>
     <p id="page">Page 1</p>
+
     <button onclick="previousPage()">Previous</button>
     <button onclick="nextPage()">Next</button>
     <button onclick="closeBook()">Close</button>
@@ -245,15 +319,17 @@
     <h2>About Us</h2>
     <p>Learn, Read and Imagine with Magic Book World.</p>
   </section>
+
 </main>
 
 <footer>
   © 2026 Magic Book World
 </footer>
 
-<script>
-  
 
+</div>
+
+<script>
 const stories = {
   rabbit: {
     title: "खरगोश और कछुआ",
@@ -261,131 +337,131 @@ const stories = {
     pages: [
       {
         art:"🐰🌳🐢",
-        hi:"एक सुंदर जंगल में तेज दौड़ने वाला खरगोश रहता था। उसे अपनी गति पर बहुत घमंड था। वह दूसरे जानवरों का मजाक उड़ाता था। उसी जंगल में एक शांत और मेहनती कछुआ भी रहता था।",
-        en:"In a beautiful forest lived a fast rabbit. He was very proud of his speed and often laughed at other animals. A calm and hardworking tortoise also lived there."
+        hi:"एक जंगल में तेज दौड़ने वाला खरगोश रहता था। उसे अपनी गति पर घमंड था। एक दिन उसने कछुए को दौड़ की चुनौती दी।",
+        en:"A fast rabbit lived in a forest. He was proud of his speed. One day he challenged a tortoise to a race."
       },
       {
         art:"🏁🐰🐢",
-        hi:"एक दिन खरगोश ने कछुए को दौड़ की चुनौती दी। सभी जानवर इकट्ठा हुए। दौड़ शुरू हुई और खरगोश बहुत तेजी से आगे निकल गया। कछुआ धीरे-धीरे लेकिन लगातार चलता रहा।",
-        en:"One day the rabbit challenged the tortoise to a race. All the animals gathered. The race began. The rabbit ran far ahead while the tortoise kept moving slowly and steadily."
+        hi:"दौड़ शुरू हुई। खरगोश बहुत आगे निकल गया। कछुआ धीरे-धीरे चलता रहा।",
+        en:"The race began. The rabbit ran far ahead while the tortoise kept walking slowly."
       },
       {
         art:"🐰💤🌳",
-        hi:"खरगोश ने पीछे मुड़कर देखा। कछुआ बहुत दूर था। उसने सोचा कि थोड़ा आराम कर लेता हूँ। वह पेड़ के नीचे सो गया। लेकिन कछुआ रुका नहीं। वह हर कदम के साथ मंजिल के करीब पहुँचता गया।",
-        en:"The rabbit looked back and saw the tortoise far behind. He decided to rest under a tree and fell asleep. But the tortoise did not stop. Every step brought him closer to the finish line."
+        hi:"खरगोश ने सोचा कि थोड़ा आराम कर लेता हूँ। वह पेड़ के नीचे सो गया। कछुआ लगातार चलता रहा।",
+        en:"The rabbit decided to rest under a tree and fell asleep. The tortoise continued walking."
       },
       {
         art:"🐢🏆🎉",
-        hi:"जब खरगोश की नींद खुली, कछुआ मंजिल पार कर चुका था। खरगोश हार गया। उसे अपनी गलती समझ आई। उसने सीखा कि घमंड से नहीं, लगातार मेहनत और धैर्य से सफलता मिलती है।",
-        en:"When the rabbit woke up, the tortoise had already crossed the finish line. The rabbit lost and understood his mistake. He learned that success comes through patience and consistent effort, not pride."
+        hi:"कछुआ दौड़ जीत गया। खरगोश को अपनी गलती समझ आई। सीख: लगातार मेहनत से सफलता मिलती है।",
+        en:"The tortoise won the race. The rabbit understood his mistake. Moral: Hard work brings success."
       }
     ]
   },
 
   lion: {
-    title: "शेर और चूहा",
-    englishTitle: "The Lion & The Mouse",
-    pages: [
+    title:"शेर और चूहा",
+    englishTitle:"The Lion & The Mouse",
+    pages:[
       {
-        art:"🦁🌳🌞",
-        hi:"एक घने जंगल में वीर नाम का शक्तिशाली शेर रहता था। उसे अपनी ताकत पर बहुत घमंड था। वह सोचता था कि कोई भी उसकी मदद नहीं कर सकता। एक दिन वह पेड़ के नीचे गहरी नींद में सो रहा था।",
-        en:"In a deep forest lived a powerful lion named Veer. He was very proud of his strength and believed nobody could ever help him. One day he was sleeping under a tree."
+        art:"🦁🌳",
+        hi:"एक जंगल में एक शक्तिशाली शेर रहता था। एक दिन वह पेड़ के नीचे सो रहा था।",
+        en:"A powerful lion lived in a forest. One day he was sleeping under a tree."
       },
       {
         art:"🐭🦁",
-        hi:"चिंटू नाम का छोटा चूहा खेलते हुए शेर के ऊपर चढ़ गया। शेर जागा और उसे पकड़ लिया। चूहे ने विनती की, मुझे छोड़ दीजिए। शायद एक दिन मैं भी आपकी मदद कर सकूँ। शेर हँसा, लेकिन उसने चूहे को छोड़ दिया।",
-        en:"A little mouse named Chintu climbed over the sleeping lion while playing. The lion caught him. The mouse begged, Please let me go. Perhaps one day I can help you. The lion laughed but released him."
+        hi:"एक छोटा चूहा शेर के ऊपर चढ़ गया। शेर ने उसे पकड़ लिया। चूहे ने माफी माँगी और शेर ने उसे छोड़ दिया।",
+        en:"A little mouse climbed over the lion. The lion caught him, but released him after the mouse begged."
       },
       {
-        art:"🦁🕸️😟",
-        hi:"कुछ दिनों बाद शिकारी जंगल में आए। उन्होंने जाल बिछाया और शेर उसमें फँस गया। शेर ने बहुत कोशिश की, लेकिन जाल नहीं टूटा। उसकी दहाड़ सुनकर चिंटू दौड़ता हुआ वहाँ आया।",
-        en:"A few days later, hunters came into the forest and set a trap. The lion got caught in the net. He struggled hard, but could not escape. Hearing his roar, Chintu rushed to help."
+        art:"🦁🕸️",
+        hi:"एक दिन शेर शिकारी के जाल में फँस गया। वह बहुत कोशिश करने लगा लेकिन बाहर नहीं निकल पाया।",
+        en:"One day the lion was trapped in a hunter's net. He tried hard but could not escape."
       },
       {
-        art:"🐭🦁❤️",
-        hi:"चिंटू ने अपने नन्हे दाँतों से जाल काटना शुरू किया। थोड़ी देर बाद शेर आजाद हो गया। शेर ने कहा, आज तुमने मुझे सिखाया कि छोटा होना कमजोरी नहीं है। दया और दोस्ती सबसे बड़ी ताकत हैं।",
-        en:"Chintu began cutting the net with his tiny teeth. Soon the lion was free. The lion said, You have taught me that being small is not weakness. Kindness and friendship are great strengths."
+        art:"🐭❤️🦁",
+        hi:"चूहे ने अपने दाँतों से जाल काट दिया। शेर आजाद हो गया। सीख: कोई भी छोटा नहीं होता।",
+        en:"The mouse cut the net with his teeth. The lion became free. Moral: Nobody is too small to help."
       }
     ]
   },
 
   crow: {
-    title: "प्यासा कौआ",
-    englishTitle: "The Thirsty Crow",
-    pages: [
+    title:"प्यासा कौआ",
+    englishTitle:"The Thirsty Crow",
+    pages:[
       {
-        art:"🐦☀️🌳",
-        hi:"गर्मियों का समय था। सूरज बहुत तेज चमक रहा था। एक कौआ कई घंटों से पानी खोज रहा था। उसकी प्यास बढ़ती जा रही थी और वह थककर एक पेड़ पर बैठ गया।",
-        en:"It was a hot summer day. The sun was shining brightly. A crow had been searching for water for hours. His thirst grew stronger and he sat down on a tree, tired."
+        art:"🐦☀️",
+        hi:"एक गर्म दिन एक कौआ पानी की तलाश कर रहा था। वह बहुत प्यासा था।",
+        en:"On a hot day, a crow was searching for water. He was very thirsty."
       },
       {
-        art:"🐦🏺💧",
-        hi:"अचानक उसे एक बगीचे में मिट्टी का घड़ा दिखाई दिया। वह खुशी से नीचे उतरा। घड़े में थोड़ा पानी था, लेकिन उसकी चोंच पानी तक नहीं पहुँच पा रही थी। कौआ निराश हुआ, पर उसने हार नहीं मानी।",
-        en:"Suddenly he spotted a clay pot in a garden. He flew down happily. There was a little water inside, but his beak could not reach it. The crow felt disappointed, but he did not give up."
+        art:"🐦🏺",
+        hi:"उसे एक घड़ा दिखाई दिया। उसमें थोड़ा पानी था, लेकिन उसकी चोंच पानी तक नहीं पहुँच रही थी।",
+        en:"He found a pot with a little water, but his beak could not reach it."
       },
       {
-        art:"🐦🪨🪨",
-        hi:"कौए ने आसपास देखा। उसे छोटे-छोटे कंकड़ दिखाई दिए। उसके मन में एक उपाय आया। उसने एक-एक करके कंकड़ घड़े में डालना शुरू किया। पानी धीरे-धीरे ऊपर आने लगा।",
-        en:"The crow looked around and saw small stones. An idea came to his mind. He began dropping the stones into the pot one by one. Slowly, the water level started rising."
+        art:"🐦🪨",
+        hi:"कौए ने छोटे-छोटे पत्थर उठाकर घड़े में डालने शुरू किए। पानी ऊपर आने लगा।",
+        en:"The crow started putting small stones into the pot. The water level began to rise."
       },
       {
         art:"🐦💧😊",
-        hi:"कुछ ही देर में पानी ऊपर आ गया। कौए ने आराम से पानी पिया और उड़ गया। उसने समझा कि कठिनाई आने पर घबराना नहीं चाहिए। शांत दिमाग और समझदारी से रास्ता मिल सकता है।",
-        en:"Soon the water rose high enough. The crow drank happily and flew away. He learned that we should not panic when problems appear. A calm mind and clever thinking can find a way."
+        hi:"कौए ने पानी पिया और खुशी से उड़ गया। सीख: समझदारी से समस्या हल होती है।",
+        en:"The crow drank the water and flew away happily. Moral: Intelligence solves problems."
       }
     ]
   },
 
   woodcutter: {
-    title: "ईमानदार लकड़हारा",
-    englishTitle: "The Honest Woodcutter",
-    pages: [
+    title:"ईमानदार लकड़हारा",
+    englishTitle:"The Honest Woodcutter",
+    pages:[
       {
-        art:"🪓🌳🏡",
-        hi:"एक गाँव में रामू नाम का गरीब लकड़हारा रहता था। वह रोज जंगल जाता और लकड़ियाँ काटकर अपना परिवार चलाता था। उसके पास ज्यादा धन नहीं था, लेकिन वह बहुत ईमानदार और मेहनती था।",
-        en:"In a village lived a poor woodcutter named Ramu. Every day he went to the forest and sold wood to support his family. He did not have much money, but he was honest and hardworking."
+        art:"🪓🌳",
+        hi:"एक गाँव में रामू नाम का ईमानदार लकड़हारा रहता था।",
+        en:"A woodcutter named Ramu lived in a village. He was very honest."
       },
       {
-        art:"🌳🪓💦",
-        hi:"एक दिन नदी के किनारे पेड़ काटते समय उसकी लोहे की कुल्हाड़ी नदी में गिर गई। नदी बहुत गहरी थी। रामू परेशान होकर बैठ गया। वह सोचने लगा कि अब परिवार का पालन कैसे करेगा।",
-        en:"One day, while cutting a tree near a river, his iron axe slipped into the water. The river was deep. Ramu sat sadly, wondering how he would support his family."
+        art:"🌳💦",
+        hi:"एक दिन उसकी लोहे की कुल्हाड़ी नदी में गिर गई। वह बहुत दुखी हुआ।",
+        en:"One day his iron axe fell into a river. He became very sad."
       },
       {
-        art:"🧚✨🥇",
-        hi:"तभी नदी से एक दिव्य परी प्रकट हुई। उसने सोने की कुल्हाड़ी दिखाई और पूछा, क्या यह तुम्हारी है? रामू ने कहा, नहीं। फिर उसने चाँदी की कुल्हाड़ी दिखाई। रामू ने उसे भी अपना नहीं बताया।",
-        en:"Suddenly, a magical fairy appeared from the river. She showed him a golden axe and asked if it was his. Ramu said no. Then she showed him a silver axe. He honestly said that was not his either."
+        art:"🧚🥇",
+        hi:"एक परी आई और उसने सोने की कुल्हाड़ी दिखाई। रामू ने कहा यह मेरी नहीं है।",
+        en:"A fairy appeared and showed him a golden axe. Ramu said it was not his."
       },
       {
-        art:"🪓🥇🥈😊",
-        hi:"आखिर परी ने उसकी लोहे की कुल्हाड़ी निकाली। रामू खुशी से बोला, यही मेरी कुल्हाड़ी है! उसकी ईमानदारी से प्रसन्न होकर परी ने तीनों कुल्हाड़ियाँ उसे दे दीं। रामू ने सीखा कि सच्चाई का फल हमेशा अच्छा होता है।",
-        en:"Finally, the fairy brought out his iron axe. Ramu happily said, That is mine! Pleased with his honesty, the fairy gave him all three axes. Ramu learned that honesty brings lasting rewards."
+        art:"🪓😊",
+        hi:"परी ने उसकी ईमानदारी से खुश होकर उसे तीनों कुल्हाड़ियाँ दे दीं। सीख: ईमानदारी सबसे अच्छी नीति है।",
+        en:"The fairy rewarded his honesty by giving him all three axes. Moral: Honesty is the best policy."
       }
     ]
   },
 
   seed: {
-    title: "नन्हा बीज",
-    englishTitle: "The Little Seed",
-    pages: [
+    title:"नन्हा बीज",
+    englishTitle:"The Little Seed",
+    pages:[
       {
-        art:"🌱🌧️🌍",
-        hi:"एक बगीचे की मिट्टी में एक छोटा सा बीज पड़ा था। वह दूसरे बड़े पेड़ों को देखकर सोचता था कि मैं इतना छोटा हूँ, कभी बड़ा नहीं बन पाऊँगा। उसे अपनी क्षमता पर विश्वास नहीं था।",
-        en:"A tiny seed lay in the soil of a garden. Looking at the tall trees, it thought, I am so small. I will never become something big. It did not believe in itself."
+        art:"🌱🌍",
+        hi:"एक छोटा बीज मिट्टी में पड़ा था। उसे लगता था कि वह कभी बड़ा नहीं बन पाएगा।",
+        en:"A little seed lay in the soil. It thought it could never grow big."
       },
       {
-        art:"🌧️🌞🌱",
-        hi:"एक दिन बारिश हुई और मिट्टी नरम हो गई। बीज के भीतर एक नई उम्मीद जागी। उसने सोचा, मैं कोशिश तो कर सकता हूँ। उसने अपनी छोटी सी जड़ बाहर निकाली और मिट्टी को धीरे-धीरे चीरना शुरू किया।",
-        en:"One day rain softened the soil. A new hope awakened inside the seed. It thought, At least I can try. It pushed out a tiny root and slowly began breaking through the soil."
+        art:"🌧️🌱",
+        hi:"बारिश हुई और बीज को पानी मिला। उसने मिट्टी से बाहर निकलने की कोशिश की।",
+        en:"It rained and the seed received water. It tried to grow out of the soil."
       },
       {
-        art:"🌱🌿💪",
-        hi:"रास्ते में पत्थर आए, तेज धूप आई और कभी-कभी पानी भी नहीं मिला। फिर भी नन्हा पौधा बढ़ता रहा। वह हर दिन थोड़ा मजबूत बनता गया। उसने समझा कि मुश्किलें रास्ता रोकने नहीं, मजबूत बनाने आती हैं।",
-        en:"There were stones, strong sunlight and days without rain. Still, the little plant kept growing. Every day it became a little stronger. It learned that difficulties can make us stronger."
+        art:"🌱🌿",
+        hi:"धीरे-धीरे वह एक छोटा पौधा बन गया। उसने मुश्किलों का सामना किया।",
+        en:"Slowly it became a little plant. It faced many difficulties."
       },
       {
-        art:"🌳🌻🦋",
-        hi:"कई महीनों बाद वही छोटा बीज एक सुंदर पेड़ बन गया। उसकी छाया में पक्षी रहने लगे और बच्चे खेलने लगे। अब उसे अपनी छोटी शुरुआत पर गर्व था। सीख: अपने छोटे कदमों को कम मत समझो। लगातार कोशिश से बड़े सपने पूरे होते हैं।",
-        en:"Months later, the tiny seed had become a beautiful tree. Birds lived in its branches and children played in its shade. It was proud of its small beginning. Moral: Never underestimate small steps. Consistent effort can grow into great achievements."
+        art:"🌳🌻",
+        hi:"कुछ महीनों बाद वह सुंदर पेड़ बन गया। सीख: लगातार कोशिश से बड़े सपने पूरे होते हैं।",
+        en:"After some months it became a beautiful tree. Moral: Keep trying to achieve your dreams."
       }
     ]
   }
@@ -397,22 +473,26 @@ let bookLang = "hi";
 
 function openBook(id) {
   if (!stories[id]) return;
+
   currentStory = id;
   currentPage = 0;
+
   const reader = document.getElementById("reader");
-  reader.style.display = "block";
+  reader.hidden = false;
 
   if (!document.getElementById("voiceControls")) {
     const controls = document.createElement("div");
     controls.id = "voiceControls";
     controls.style.textAlign = "center";
     controls.style.margin = "15px";
+
     controls.innerHTML = `
       <button onclick="changeLanguage('hi')">हिंदी</button>
       <button onclick="changeLanguage('en')">English</button>
       <button onclick="speakStory()">🔊 Listen</button>
       <button onclick="stopStory()">⏹ Stop</button>
     `;
+
     reader.insertBefore(controls, document.getElementById("story"));
   }
 
@@ -428,15 +508,16 @@ function changeLanguage(lang) {
 function showPage() {
   const book = stories[currentStory];
   const p = book.pages[currentPage];
-  const story = document.getElementById("story");
 
-  story.innerHTML = `
+  document.getElementById("story").innerHTML = `
     <div style="font-size:75px;text-align:center;padding:20px;">
       ${p.art}
     </div>
+
     <h3 style="text-align:center;color:#6846c5;">
       ${bookLang === "hi" ? book.title : book.englishTitle}
     </h3>
+
     <p style="font-size:20px;text-align:center;line-height:1.8;">
       ${p[bookLang]}
     </p>
@@ -448,18 +529,22 @@ function showPage() {
 
 function flipPage(direction) {
   const story = document.getElementById("story");
+
   story.style.transition = "transform 0.3s ease";
-  story.style.transform = direction > 0
-    ? "rotateY(-80deg)"
-    : "rotateY(80deg)";
+  story.style.transform =
+    direction > 0 ? "rotateY(-80deg)" : "rotateY(80deg)";
 
   setTimeout(() => {
     currentPage = Math.max(
       0,
-      Math.min(stories[currentStory].pages.length - 1,
-      currentPage + direction)
+      Math.min(
+        stories[currentStory].pages.length - 1,
+        currentPage + direction
+      )
     );
+
     showPage();
+
     story.style.transition = "none";
     story.style.transform = "rotateY(0deg)";
     void story.offsetWidth;
@@ -483,10 +568,13 @@ function previousPage() {
 
 function speakStory() {
   stopStory();
+
   const p = stories[currentStory].pages[currentPage];
   const speech = new SpeechSynthesisUtterance(p[bookLang]);
+
   speech.lang = bookLang === "hi" ? "hi-IN" : "en-US";
   speech.rate = 0.85;
+
   window.speechSynthesis.speak(speech);
 }
 
@@ -498,22 +586,25 @@ function stopStory() {
 
 function closeBook() {
   stopStory();
-  document.getElementById("reader").style.display = "none";
+  document.getElementById("reader").hidden = true;
 }
-
 </script>
+
 <script type="module">
+
 import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
   onAuthStateChanged,
-  signOut,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB1FLMVc_N9IOpzaDBh906-iN8mLvgbrDs",
@@ -528,96 +619,201 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const message = document.getElementById("authMessage");
+const loginBox = document.getElementById("mbw-login");
+const siteContent = document.getElementById("site-content");
+const userBar = document.getElementById("mbw-userbar");
+const message = document.getElementById("mbw-message");
+
+let confirmationResult = null;
+let recaptchaVerifier = null;
 
 function showMessage(text) {
   message.textContent = text;
 }
 
-// REGISTER
-document.getElementById("registerForm")
-  .addEventListener("submit", async function(event) {
-    event.preventDefault();
+function friendlyError(error) {
+  const messages = {
+    "auth/email-already-in-use": "यह Email पहले से Register है। Login करें।",
+    "auth/invalid-email": "कृपया सही Email address डालें।",
+    "auth/weak-password": "Password कम से कम 6 अक्षरों का होना चाहिए।",
+    "auth/invalid-credential": "Email या Password गलत है।",
+    "auth/user-not-found": "यह Account नहीं मिला।",
+    "auth/wrong-password": "Password गलत है।",
+    "auth/too-many-requests": "कुछ देर बाद फिर कोशिश करें।",
+    "auth/invalid-phone-number": "मोबाइल नंबर सही format में डालें।",
+    "auth/invalid-verification-code": "OTP गलत है।",
+    "auth/code-expired": "OTP समाप्त हो गया। नया OTP मँगाएँ।",
+    "auth/operation-not-allowed": "Firebase Console में Login तरीका चालू करें।",
+    "auth/unauthorized-domain": "Firebase Authorized Domains में domain जोड़ें।",
+    "auth/network-request-failed": "Internet connection जाँचें।"
+  };
 
-    const name = document.getElementById("regName").value.trim();
-    const email = document.getElementById("regEmail").value.trim();
-    const password = document.getElementById("regPassword").value;
+  return messages[error.code] ||
+    "समस्या हुई: " + (error.message || "फिर कोशिश करें।");
+}
 
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth, email, password
-      );
-
-      await updateProfile(result.user, {
-        displayName: name
-      });
-
-      showMessage("Account created successfully! 🎉");
-    } catch (error) {
-      showMessage(getErrorMessage(error.code));
-    }
-  });
-
-// LOGIN
-document.getElementById("loginForm")
-  .addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      showMessage("Login successful! Welcome back. 😊");
-    } catch (error) {
-      showMessage(getErrorMessage(error.code));
-    }
-  });
-
-// LOGIN STATUS
-onAuthStateChanged(auth, function(user) {
-  const forms = document.getElementById("authForms");
-  const panel = document.getElementById("loggedInPanel");
+onAuthStateChanged(auth, (user) => {
+  loginBox.hidden = !!user;
+  siteContent.hidden = !user;
+  userBar.hidden = !user;
 
   if (user) {
-    forms.hidden = true;
-    panel.hidden = false;
-
-    document.getElementById("userName").textContent =
-      user.displayName || "Reader";
-
-    document.getElementById("userEmail").textContent =
-      user.email || "";
+    document.getElementById("mbw-user-info").textContent =
+      "Logged in: " + (user.email || user.phoneNumber || "Reader");
   } else {
-    forms.hidden = false;
-    panel.hidden = true;
+    document.getElementById("reader").hidden = true;
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  }
+});
+
+// REGISTER
+document.getElementById("mbw-register").addEventListener("click", async () => {
+  const email = document.getElementById("mbw-email").value.trim();
+  const password = document.getElementById("mbw-password").value;
+
+  if (!email || !password) {
+    showMessage("Email और Password दोनों भरें।");
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage("Password कम से कम 6 अक्षरों का होना चाहिए।");
+    return;
+  }
+
+  try {
+    showMessage("Account बनाया जा रहा है...");
+    await createUserWithEmailAndPassword(auth, email, password);
+    showMessage("Registration सफल!");
+  } catch (error) {
+    showMessage(friendlyError(error));
+  }
+});
+
+// EMAIL LOGIN
+document.getElementById("mbw-email-login").addEventListener("click", async () => {
+  const email = document.getElementById("mbw-email").value.trim();
+  const password = document.getElementById("mbw-password").value;
+
+  if (!email || !password) {
+    showMessage("Email और Password भरें।");
+    return;
+  }
+
+  try {
+    showMessage("Login हो रहा है...");
+    await signInWithEmailAndPassword(auth, email, password);
+    showMessage("Login सफल!");
+  } catch (error) {
+    showMessage(friendlyError(error));
+  }
+});
+
+// FORGOT PASSWORD
+document.getElementById("mbw-reset").addEventListener("click", async () => {
+  const email = document.getElementById("mbw-email").value.trim();
+
+  if (!email) {
+    showMessage("पहले Email address भरें।");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showMessage("Password reset link आपके Email पर भेज दिया गया है।");
+  } catch (error) {
+    showMessage(friendlyError(error));
+  }
+});
+
+// RECAPTCHA
+function setupRecaptcha() {
+  if (recaptchaVerifier) {
+    recaptchaVerifier.clear();
+    recaptchaVerifier = null;
+  }
+
+  recaptchaVerifier = new RecaptchaVerifier(auth, "mbw-recaptcha", {
+    size: "normal"
+  });
+}
+
+// SEND OTP
+document.getElementById("mbw-send-otp").addEventListener("click", async () => {
+  let phone = document.getElementById("mbw-phone").value.trim();
+  phone = phone.replace(/[\s()-]/g, "");
+
+  if (/^[6-9]\d{9}$/.test(phone)) {
+    phone = "+91" + phone;
+  }
+
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+    showMessage("सही मोबाइल नंबर डालें। उदाहरण: +919876543210");
+    return;
+  }
+
+  try {
+    showMessage("OTP भेजा जा रहा है...");
+    setupRecaptcha();
+
+    confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phone,
+      recaptchaVerifier
+    );
+
+    document.getElementById("mbw-otp-area").hidden = false;
+    showMessage("OTP भेज दिया गया है। अपना SMS देखें।");
+
+  } catch (error) {
+    showMessage(friendlyError(error));
+
+    if (recaptchaVerifier) {
+      recaptchaVerifier.clear();
+      recaptchaVerifier = null;
+    }
+  }
+});
+
+// VERIFY OTP
+document.getElementById("mbw-verify-otp").addEventListener("click", async () => {
+  const otp = document.getElementById("mbw-otp").value.trim();
+
+  if (!confirmationResult) {
+    showMessage("पहले Send OTP दबाएँ।");
+    return;
+  }
+
+  if (!/^\d{6}$/.test(otp)) {
+    showMessage("6 अंकों का OTP डालें।");
+    return;
+  }
+
+  try {
+    showMessage("OTP जाँचा जा रहा है...");
+    await confirmationResult.confirm(otp);
+
+    showMessage("Mobile Login सफल!");
+    document.getElementById("mbw-otp-area").hidden = true;
+
+  } catch (error) {
+    showMessage(friendlyError(error));
   }
 });
 
 // LOGOUT
-document.getElementById("logoutButton")
-  .addEventListener("click", async function() {
-    try {
-      await signOut(auth);
-      showMessage("You have logged out successfully.");
-    } catch (error) {
-      showMessage("Logout failed. Please try again.");
-    }
-  });
+document.getElementById("mbw-logout").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    showMessage("आप Logout हो गए हैं।");
+  } catch (error) {
+    showMessage(friendlyError(error));
+  }
+});
 
-// SIMPLE ERROR MESSAGES
-function getErrorMessage(code) {
-  const errors = {
-    "auth/email-already-in-use": "This email is already registered.",
-    "auth/invalid-email": "Please enter a valid email.",
-    "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/invalid-credential": "Incorrect email or password.",
-    "auth/too-many-requests": "Too many attempts. Please try later.",
-    "auth/network-request-failed": "Check your internet connection."
-  };
-
-  return errors[code] || "Something went wrong. Please try again.";
-}
 </script>
+
 </body>
 </html>
