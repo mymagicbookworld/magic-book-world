@@ -6,37 +6,18 @@
 <title>Magic Book World</title>
 
 <style>
-[hidden] {
-  display: none !important;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f0ff;
-  color: #292044;
-}
-
-#mbw-login {
-  max-width: 430px;
-  margin: 35px auto;
-  padding: 25px;
+.auth-card {
+  max-width: 480px;
+  margin: 28px auto;
+  padding: 24px;
   border-radius: 16px;
   background: #102b64;
   color: white;
   font-family: Arial, sans-serif;
-  box-shadow: 0 8px 25px #0003;
 }
 
-#mbw-login h2 {
-  text-align: center;
-}
-
-#mbw-login input {
+.auth-card input {
+  box-sizing: border-box;
   width: 100%;
   padding: 13px;
   margin: 8px 0;
@@ -45,115 +26,30 @@ body {
   font-size: 16px;
 }
 
-#mbw-login button {
+.auth-card button {
   width: 100%;
   padding: 13px;
   margin: 7px 0;
   border: 0;
   border-radius: 8px;
-  background: #ffd34e;
+  background: white;
   color: #17264b;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
 }
 
-#mbw-login button.secondary {
-  background: white;
+.auth-card button.primary {
+  background: #ffd34e;
 }
 
-#mbw-message {
+.register-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.auth-message {
   min-height: 24px;
-  overflow-wrap: anywhere;
-  text-align: center;
-}
-
-#mbw-userbar {
-  padding: 12px;
-  text-align: center;
-  background: #e8f0ff;
-  color: #17264b;
-}
-
-header {
-  background: #5436a5;
-  color: white;
-  padding: 25px 15px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0 0 8px;
-}
-
-nav {
-  padding: 14px;
-  text-align: center;
-  background: white;
-}
-
-nav a {
-  margin: 8px;
-  color: #5436a5;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-main {
-  padding: 20px;
-  text-align: center;
-}
-
-.books {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
-  gap: 16px;
-  max-width: 700px;
-  margin: 20px auto;
-}
-
-.book {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 4px 12px #ddd;
-}
-
-.cover {
-  font-size: 55px;
-}
-
-button {
-  background: #6846c5;
-  color: white;
-  border: 0;
-  border-radius: 20px;
-  padding: 10px 18px;
-  cursor: pointer;
-}
-
-#reader {
-  background: white;
-  max-width: 500px;
-  margin: 25px auto;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px #ddd;
-}
-
-#story {
-  min-height: 180px;
-  position: relative;
-  transform-style: preserve-3d;
-  transform-origin: left center;
-  backface-visibility: hidden;
-  border: 2px solid #e5d8b5;
-  overflow: hidden;
-  box-shadow: 8px 8px 18px rgba(0,0,0,0.25);
-}
-
-footer {
-  padding: 20px;
   text-align: center;
 }
 </style>
@@ -161,53 +57,125 @@ footer {
 
 <body>
 
-<section id="mbw-login">
+<!-- LOGIN PAGE -->
+<section id="mbw-login" class="auth-card">
   <h2>📖 Magic Book World</h2>
+  <p>Login करके अपनी किताबें पढ़ें।</p>
 
-  <p style="text-align:center">
-    Login या Register करके अपनी किताबें पढ़ें।
-  </p>
+  <h3>Email Login</h3>
+  <input id="mbw-login-email" type="email"
+         placeholder="Email address">
 
-  <h3>Email Login / Register</h3>
+  <input id="mbw-login-password" type="password"
+         placeholder="Password">
 
-  <input id="mbw-email" type="email"
-    placeholder="Email address" autocomplete="email">
-
-  <input id="mbw-password" type="password"
-    placeholder="Password (कम से कम 6 अक्षर)"
-    autocomplete="current-password">
-
-  <button id="mbw-register">Create New Account</button>
-
-  <button id="mbw-email-login" class="secondary">
-    Login with Email
-  </button>
-
-  <button id="mbw-reset" class="secondary">
-    Forgot Password?
-  </button>
+  <button id="mbw-email-login">Login with Email</button>
+  <button id="mbw-reset">Forgot Password?</button>
 
   <hr>
 
-  <h3>Mobile OTP Login</h3>
+  <button id="mbw-open-register" class="primary">
+    Create New Account
+  </button>
 
-  <input id="mbw-phone" type="tel"
-    placeholder="+91 9876543210" autocomplete="tel">
+  <p id="mbw-login-message"></p>
+</section>
 
-  <div id="mbw-recaptcha"></div>
+<!-- NEW REGISTRATION PAGE -->
+<section id="mbw-register-page" class="auth-card" hidden>
 
-  <button id="mbw-send-otp">Send OTP</button>
+  <button id="mbw-back-login">← वापस Login पर जाएँ</button>
 
-  <div id="mbw-otp-area" hidden>
-    <input id="mbw-otp" type="text"
-      inputmode="numeric" placeholder="Enter 6-digit OTP">
+  <h2>नया अकाउंट बनाएँ</h2>
 
-    <button id="mbw-verify-otp">
-      Verify OTP & Login
+  <div class="register-tabs">
+    <button id="mbw-email-tab" class="tab-active">
+      Email से
+    </button>
+
+    <button id="mbw-phone-tab">
+      Mobile OTP से
     </button>
   </div>
 
-  <p id="mbw-message" role="status"></p>
+  <!-- EMAIL REGISTRATION -->
+  <div id="mbw-email-register-panel">
+
+    <h3>Email Registration</h3>
+
+    <input id="mbw-reg-email" type="email"
+           placeholder="अपना Email डालें">
+
+    <input id="mbw-reg-userid" type="text"
+           placeholder="अपनी User ID बनाएँ">
+
+    <input id="mbw-reg-password" type="password"
+           placeholder="Password बनाएँ">
+
+    <input id="mbw-reg-confirm-password" type="password"
+           placeholder="Password दोबारा डालें">
+
+    <button id="mbw-create-email-account">
+      Register करें
+    </button>
+
+  </div>
+
+  <!-- MOBILE REGISTRATION -->
+  <div id="mbw-phone-register-panel" hidden>
+
+    <h3>Mobile OTP Registration</h3>
+
+    <input id="mbw-reg-phone" type="tel"
+           placeholder="मोबाइल नंबर +919876543210">
+
+    <div id="mbw-register-recaptcha"></div>
+
+    <button id="mbw-send-register-otp">
+      Send OTP
+    </button>
+
+    <!-- OTP BOX -->
+    <div id="mbw-register-otp-area" hidden>
+
+      <input id="mbw-register-otp"
+             type="text"
+             maxlength="6"
+             placeholder="6 अंकों का OTP डालें">
+
+      <button id="mbw-verify-register-otp">
+        OTP Verify करें
+      </button>
+
+    </div>
+
+    <!-- OTP VERIFY होने के बाद -->
+    <div id="mbw-phone-profile-area" hidden>
+
+      <p>✓ Mobile OTP Verify हो गया।</p>
+
+      <input id="mbw-phone-reg-email" type="email"
+             placeholder="अपना Email डालें">
+
+      <input id="mbw-phone-reg-userid" type="text"
+             placeholder="अपनी User ID बनाएँ">
+
+      <input id="mbw-phone-reg-password" type="password"
+             placeholder="Password बनाएँ">
+
+      <input id="mbw-phone-reg-confirm" type="password"
+             placeholder="Password दोबारा डालें">
+
+      <button id="mbw-finish-phone-registration">
+        Registration पूरा करें
+      </button>
+
+    </div>
+
+  </div>
+
+  <p id="mbw-register-message"></p>
+
 </section>
 
 <div id="site-content" hidden>
@@ -592,8 +560,7 @@ function closeBook() {
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
   getAuth,
@@ -603,7 +570,10 @@ import {
   signInWithPhoneNumber,
   RecaptchaVerifier,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile,
+  EmailAuthProvider,
+  linkWithCredential
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -620,129 +590,190 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const loginBox = document.getElementById("mbw-login");
+const registerPage = document.getElementById("mbw-register-page");
 const siteContent = document.getElementById("site-content");
-const userBar = document.getElementById("mbw-userbar");
-const message = document.getElementById("mbw-message");
 
 let confirmationResult = null;
 let recaptchaVerifier = null;
+let registrationInProgress = false;
 
-function showMessage(text) {
-  message.textContent = text;
+function loginMsg(t) {
+  document.getElementById("mbw-login-message").textContent = t;
+}
+
+function regMsg(t) {
+  document.getElementById("mbw-register-message").textContent = t;
 }
 
 function friendlyError(error) {
   const messages = {
-    "auth/email-already-in-use": "यह Email पहले से Register है। Login करें।",
-    "auth/invalid-email": "कृपया सही Email address डालें।",
-    "auth/weak-password": "Password कम से कम 6 अक्षरों का होना चाहिए।",
+    "auth/email-already-in-use": "यह Email पहले से Register है।",
+    "auth/invalid-email": "Email सही नहीं है।",
+    "auth/weak-password": "Password कम से कम 6 अक्षर का रखें।",
     "auth/invalid-credential": "Email या Password गलत है।",
-    "auth/user-not-found": "यह Account नहीं मिला।",
-    "auth/wrong-password": "Password गलत है।",
-    "auth/too-many-requests": "कुछ देर बाद फिर कोशिश करें।",
-    "auth/invalid-phone-number": "मोबाइल नंबर सही format में डालें।",
     "auth/invalid-verification-code": "OTP गलत है।",
     "auth/code-expired": "OTP समाप्त हो गया। नया OTP मँगाएँ।",
-    "auth/operation-not-allowed": "Firebase Console में Login तरीका चालू करें।",
-    "auth/unauthorized-domain": "Firebase Authorized Domains में domain जोड़ें।",
-    "auth/network-request-failed": "Internet connection जाँचें।"
+    "auth/operation-not-allowed": "Firebase में Email/Phone Login चालू करें।",
+    "auth/unauthorized-domain": "Firebase में वेबसाइट का Domain जोड़ें।",
+    "auth/too-many-requests": "बहुत बार कोशिश हुई। बाद में प्रयास करें।"
   };
 
-  return messages[error.code] ||
-    "समस्या हुई: " + (error.message || "फिर कोशिश करें।");
+  return messages[error.code] || error.message;
 }
 
-onAuthStateChanged(auth, (user) => {
-  loginBox.hidden = !!user;
-  siteContent.hidden = !user;
-  userBar.hidden = !user;
+function finishRegistration(user) {
+  registrationInProgress = false;
+  registerPage.hidden = true;
+  loginBox.hidden = true;
+  siteContent.hidden = false;
 
-  if (user) {
-    document.getElementById("mbw-user-info").textContent =
-      "Logged in: " + (user.email || user.phoneNumber || "Reader");
-  } else {
-    document.getElementById("reader").hidden = true;
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-  }
-});
+  document.getElementById("mbw-user-info").textContent =
+    "Logged in: " +
+    (user.displayName || user.email || user.phoneNumber || "Reader");
+}
 
-// REGISTER
-document.getElementById("mbw-register").addEventListener("click", async () => {
-  const email = document.getElementById("mbw-email").value.trim();
-  const password = document.getElementById("mbw-password").value;
-
-  if (!email || !password) {
-    showMessage("Email और Password दोनों भरें।");
-    return;
+function validProfile(email, userId, password, confirm) {
+  if (!email || !userId || !password || !confirm) {
+    regMsg("सभी जानकारी भरें।");
+    return false;
   }
 
   if (password.length < 6) {
-    showMessage("Password कम से कम 6 अक्षरों का होना चाहिए।");
-    return;
+    regMsg("Password कम से कम 6 अक्षर का होना चाहिए।");
+    return false;
   }
 
-  try {
-    showMessage("Account बनाया जा रहा है...");
-    await createUserWithEmailAndPassword(auth, email, password);
-    showMessage("Registration सफल!");
-  } catch (error) {
-    showMessage(friendlyError(error));
+  if (password !== confirm) {
+    regMsg("दोनों Password एक जैसे नहीं हैं।");
+    return false;
+  }
+
+  return true;
+}
+
+// LOGIN STATUS
+onAuthStateChanged(auth, (user) => {
+  const showSite = !!user && !registrationInProgress;
+
+  loginBox.hidden = !!user || registrationInProgress;
+  registerPage.hidden = !!user || !registrationInProgress;
+  siteContent.hidden = !showSite;
+
+  if (user && showSite) {
+    document.getElementById("mbw-user-info").textContent =
+      "Logged in: " +
+      (user.displayName || user.email || user.phoneNumber || "Reader");
   }
 });
+
+// OPEN REGISTRATION PAGE
+document.getElementById("mbw-open-register").onclick = () => {
+  loginBox.hidden = true;
+  registerPage.hidden = false;
+  regMsg("");
+};
+
+// BACK TO LOGIN
+document.getElementById("mbw-back-login").onclick = () => {
+  registerPage.hidden = true;
+  loginBox.hidden = false;
+};
+
+// EMAIL TAB
+document.getElementById("mbw-email-tab").onclick = () => {
+  document.getElementById("mbw-email-register-panel").hidden = false;
+  document.getElementById("mbw-phone-register-panel").hidden = true;
+};
+
+// MOBILE TAB
+document.getElementById("mbw-phone-tab").onclick = () => {
+  document.getElementById("mbw-email-register-panel").hidden = true;
+  document.getElementById("mbw-phone-register-panel").hidden = false;
+};
+
+// EMAIL REGISTRATION
+document.getElementById("mbw-create-email-account").onclick = async () => {
+
+  const email = document.getElementById("mbw-reg-email").value.trim();
+  const userId = document.getElementById("mbw-reg-userid").value.trim();
+  const password = document.getElementById("mbw-reg-password").value;
+  const confirm = document.getElementById("mbw-reg-confirm-password").value;
+
+  if (!validProfile(email, userId, password, confirm)) return;
+
+  try {
+    registrationInProgress = true;
+    regMsg("Account बनाया जा रहा है...");
+
+    const result = await createUserWithEmailAndPassword(
+      auth, email, password
+    );
+
+    await updateProfile(result.user, {
+      displayName: userId
+    });
+
+    finishRegistration(result.user);
+
+  } catch (error) {
+    registrationInProgress = false;
+    regMsg(friendlyError(error));
+  }
+};
 
 // EMAIL LOGIN
-document.getElementById("mbw-email-login").addEventListener("click", async () => {
-  const email = document.getElementById("mbw-email").value.trim();
-  const password = document.getElementById("mbw-password").value;
+document.getElementById("mbw-email-login").onclick = async () => {
+
+  const email = document.getElementById("mbw-login-email").value.trim();
+  const password = document.getElementById("mbw-login-password").value;
 
   if (!email || !password) {
-    showMessage("Email और Password भरें।");
+    loginMsg("Email और Password भरें।");
     return;
   }
 
   try {
-    showMessage("Login हो रहा है...");
     await signInWithEmailAndPassword(auth, email, password);
-    showMessage("Login सफल!");
   } catch (error) {
-    showMessage(friendlyError(error));
+    loginMsg(friendlyError(error));
   }
-});
+};
 
 // FORGOT PASSWORD
-document.getElementById("mbw-reset").addEventListener("click", async () => {
-  const email = document.getElementById("mbw-email").value.trim();
+document.getElementById("mbw-reset").onclick = async () => {
+
+  const email = document.getElementById("mbw-login-email").value.trim();
 
   if (!email) {
-    showMessage("पहले Email address भरें।");
+    loginMsg("पहले Email डालें।");
     return;
   }
 
   try {
     await sendPasswordResetEmail(auth, email);
-    showMessage("Password reset link आपके Email पर भेज दिया गया है।");
+    loginMsg("Password Reset Link Email पर भेज दिया गया है।");
   } catch (error) {
-    showMessage(friendlyError(error));
+    loginMsg(friendlyError(error));
   }
-});
+};
 
 // RECAPTCHA
-function setupRecaptcha() {
+function setupRegisterRecaptcha() {
   if (recaptchaVerifier) {
     recaptchaVerifier.clear();
-    recaptchaVerifier = null;
   }
 
-  recaptchaVerifier = new RecaptchaVerifier(auth, "mbw-recaptcha", {
-    size: "normal"
-  });
+  recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    "mbw-register-recaptcha",
+    { size: "normal" }
+  );
 }
 
-// SEND OTP
-document.getElementById("mbw-send-otp").addEventListener("click", async () => {
-  let phone = document.getElementById("mbw-phone").value.trim();
+// SEND MOBILE OTP
+document.getElementById("mbw-send-register-otp").onclick = async () => {
+
+  let phone = document.getElementById("mbw-reg-phone").value.trim();
   phone = phone.replace(/[\s()-]/g, "");
 
   if (/^[6-9]\d{9}$/.test(phone)) {
@@ -750,13 +781,14 @@ document.getElementById("mbw-send-otp").addEventListener("click", async () => {
   }
 
   if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    showMessage("सही मोबाइल नंबर डालें। उदाहरण: +919876543210");
+    regMsg("सही मोबाइल नंबर डालें।");
     return;
   }
 
   try {
-    showMessage("OTP भेजा जा रहा है...");
-    setupRecaptcha();
+    regMsg("OTP भेजा जा रहा है...");
+
+    setupRegisterRecaptcha();
 
     confirmationResult = await signInWithPhoneNumber(
       auth,
@@ -764,54 +796,94 @@ document.getElementById("mbw-send-otp").addEventListener("click", async () => {
       recaptchaVerifier
     );
 
-    document.getElementById("mbw-otp-area").hidden = false;
-    showMessage("OTP भेज दिया गया है। अपना SMS देखें।");
+    document.getElementById("mbw-register-otp-area").hidden = false;
+
+    regMsg("OTP आपके मोबाइल पर भेज दिया गया है।");
 
   } catch (error) {
-    showMessage(friendlyError(error));
+    regMsg(friendlyError(error));
 
     if (recaptchaVerifier) {
       recaptchaVerifier.clear();
       recaptchaVerifier = null;
     }
   }
-});
+};
 
 // VERIFY OTP
-document.getElementById("mbw-verify-otp").addEventListener("click", async () => {
-  const otp = document.getElementById("mbw-otp").value.trim();
+document.getElementById("mbw-verify-register-otp").onclick = async () => {
+
+  const otp = document.getElementById("mbw-register-otp").value.trim();
 
   if (!confirmationResult) {
-    showMessage("पहले Send OTP दबाएँ।");
+    regMsg("पहले Send OTP दबाएँ।");
     return;
   }
 
   if (!/^\d{6}$/.test(otp)) {
-    showMessage("6 अंकों का OTP डालें।");
+    regMsg("6 अंकों का OTP डालें।");
     return;
   }
 
   try {
-    showMessage("OTP जाँचा जा रहा है...");
+    registrationInProgress = true;
+    regMsg("OTP Verify हो रहा है...");
+
     await confirmationResult.confirm(otp);
 
-    showMessage("Mobile Login सफल!");
-    document.getElementById("mbw-otp-area").hidden = true;
+    document.getElementById("mbw-phone-profile-area").hidden = false;
+    document.getElementById("mbw-register-otp-area").hidden = true;
+
+    regMsg("OTP Verify हो गया। अब अपनी जानकारी भरें।");
 
   } catch (error) {
-    showMessage(friendlyError(error));
+    registrationInProgress = false;
+    regMsg(friendlyError(error));
   }
-});
+};
+
+// FINISH MOBILE REGISTRATION
+document.getElementById("mbw-finish-phone-registration").onclick = async () => {
+
+  const email = document.getElementById("mbw-phone-reg-email").value.trim();
+  const userId = document.getElementById("mbw-phone-reg-userid").value.trim();
+  const password = document.getElementById("mbw-phone-reg-password").value;
+  const confirm = document.getElementById("mbw-phone-reg-confirm").value;
+
+  if (!validProfile(email, userId, password, confirm)) return;
+
+  if (!auth.currentUser || !auth.currentUser.phoneNumber) {
+    regMsg("पहले Mobile OTP Verify करें।");
+    return;
+  }
+
+  try {
+    const credential = EmailAuthProvider.credential(email, password);
+
+    const linked = await linkWithCredential(
+      auth.currentUser,
+      credential
+    );
+
+    await updateProfile(linked.user, {
+      displayName: userId
+    });
+
+    finishRegistration(linked.user);
+
+    regMsg("Registration सफल हो गया!");
+
+  } catch (error) {
+    regMsg(friendlyError(error));
+  }
+};
 
 // LOGOUT
-document.getElementById("mbw-logout").addEventListener("click", async () => {
-  try {
-    await signOut(auth);
-    showMessage("आप Logout हो गए हैं।");
-  } catch (error) {
-    showMessage(friendlyError(error));
-  }
-});
+document.getElementById("mbw-logout").onclick = async () => {
+  await signOut(auth);
+  loginBox.hidden = false;
+  registerPage.hidden = true;
+};
 
 </script>
 
